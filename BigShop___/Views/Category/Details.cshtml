@@ -1,0 +1,46 @@
+﻿@model BigShop___.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+}@{ Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <h2 class="mt-4">Category Details</h2>
+    <div class="form-horizontal d-flex justify-content-center">
+
+        <hr />
+        <div class=" col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <table class="table  table-bordered table-hover ">
+                <thead class="thead-dark">
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoryName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.isAvailable)
+                </th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.CategoryName)
+
+                        <td>
+                            @Html.DisplayFor(model => model.isAvailable)
+                        </td>
+                    </tr>
+                </tbody>
+
+
+
+
+
+            </table>
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.CategoryID }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+        </div>
+
+    </div>
+</div>

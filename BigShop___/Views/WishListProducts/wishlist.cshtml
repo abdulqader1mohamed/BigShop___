@@ -1,0 +1,209 @@
+@using Microsoft.AspNet.Identity
+@using BigShop___.Models
+@model IEnumerable<WishListProducts>
+@{
+    ViewBag.Title = "Wish List";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+
+}
+<style>
+    tbody > tr:hover {
+        background-color: honeydew
+    }
+</style>
+<div class="super_container">
+    @Html.Partial("BlackSection");
+
+
+    <div class="catr-table">
+        <div class="container">
+            <div class="table-responsive">
+
+                <table class="contenttable table  table-bordered ">
+                    <thead>
+                        <tr>
+
+                            <th colspan="2">
+                                <p>product</p>
+                            </th>
+                            <th>
+                                <p>price</p>
+
+                            </th>
+
+                            <th>
+                                <p>stock status</p>
+                            </th>
+                            <th>
+                                <p>remove</p>
+                            </th>
+                            <th>
+                                <p>add to cart</p>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model.Count() == 0)
+                        {
+
+
+                            <tr>
+                                <td colspan="6" class="bg-warning"><h2>You Don't have Favorite List yet<br /><h5>You can see our Products From <a class="btn-link " href="~/product/products">Here</a></h5></h2></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr class="wow bounceInUp delay-200">
+
+                                    <td>
+                                        <div class="imgess">
+                                            <img src="~/images/@item.Product.ProductImageURL">
+                                        </div>
+
+                                    </td>
+                                    <td>
+
+                                        <div class="name">
+                                            <h3>@item.Product.ProductName</h3>
+                                        </div>
+                                        <div class="rstestare">
+                                            <ul>
+                                                @for (int y = 0; y < 5; y++)
+                                                {
+                                                    if (item.Product.ProductRate > y)
+                                                    {
+                                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center">
+
+                                        <span class="old-price"> <i class="fa fa-gbp" aria-hidden="true"></i>@item.Product.ProductOldPrice</span>
+                                        &nbsp;
+                                        &nbsp;
+                                        &nbsp;
+                                        <span class="new-price"> <i class="fa fa-gbp" aria-hidden="true"></i>@item.Product.ProductNewPrice</span>
+                                    </td>
+
+                                    <td>
+                                        <p class="stock" style="float: none;">@item.Product.ProductStock in stock</p>
+                                    </td>
+                                    <td>
+                                        <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+                                            <input type="hidden" value="@User.Identity.GetUserId()" name="User_Id" />
+                                            <input type="hidden" class="form-control " value="1" name="quantity" />
+                                            <input type="hidden" value="@item.ProductID" name="ProductID" />
+
+                                            <button class="icon-cart remove" id="@item.ProductID">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+
+                                        <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+
+                                            <input type="hidden" value="@User.Identity.GetUserId()" name="User_Id" />
+                                            <input type="hidden" class="form-control " value="1" name="quantity" />
+                                            <input type="hidden" value="@item.ProductID" name="productId" />
+                                            <button class="btn btn-danger  addwish submit" id="@item.ProductID">
+                                                add to cart
+                                            </button>
+
+                                        </form>
+                                    </td>
+
+                                </tr>
+
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="carttotal">
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("Services");
+
+</div>
+
+
+
+@section scripts{
+    <script src="~/Scripts/bootbox.js"></script>
+
+    <script>
+
+        $(function () {
+
+            $('.submit').on('click', function (evt) {
+                var btn = $(this)
+                var sr = $('form').serialize();
+                var x = sr.split("User_Id")[0] + "User_Id" + sr.split("User_Id")[1].split("=")[0] + "=" + sr.split("User_Id")[1].split("=")[1] + "=" + sr.split("User_Id")[1].split("=")[2] + "=" + btn.attr("id");
+                evt.preventDefault();
+                $.post('/cartproducts/addtocart/', x, function (data) {
+                    $.post('/Account/cartCounter/', function (data) {
+                        $('#spnCart').html(data);
+                        toastr.success("Product Added Successfully");
+                    });
+                });
+            });
+        });
+
+    </script>
+    <script>
+        $(function () {
+            markup = '<tr><td colspan="6" class="bg-warning"><h2>You Don\'t have Favorite List yet<br /><h5>You can see our Products From <a class="btn-link " href="../product/products">Here</a></h5></h2></td></tr>';
+            tableBody = $("table tbody");
+
+            $('.remove').on('click', function (evt) {
+                var btn = $(this);
+                var sr = $('form').serialize();
+
+
+                var x = sr.split("User_Id")[0] + "User_Id" + sr.split("User_Id")[1].split("=")[0] + "=" + sr.split("User_Id")[1].split("=")[1] + "=" + sr.split("User_Id")[1].split("=")[2] + "=" + btn.attr("id");
+                evt.preventDefault();
+
+                bootbox.dialog({
+                    title: 'Warning',
+                    message: '<p >Do you need to remove all quantity of this product from your Cart</p>',
+                    size: 'sm',
+                    onEscape: true,
+                    backdrop: true,
+                    buttons: {
+                        fee: {
+                            label: 'OK',
+                            className: 'btn-danger',
+                            callback: function (data) {
+                                $.post('/WishListProducts/DeleteConfirmed/', x, function (data) {
+                                    $.post('/Account/wishlistCounter/', function (data) {
+                                        $('#spnWish').html(data);
+                                        btn.parents("tr").remove();
+                                        if (document.getElementsByTagName("tr").length == 1) {
+                                            tableBody.append(markup);
+                                        }
+                                        toastr.remove();
+                                        toastr.success("Product Deleted Successfully From your WishList");
+                                    });
+                                });
+                            }
+                        },
+                    }
+                })
+            });
+        });
+    </script>
+}

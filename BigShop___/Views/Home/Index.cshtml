@@ -1,0 +1,450 @@
+@model List<BigShop___.Models.Product>
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Home";
+    ViewBag.activehome = "active";
+
+}
+@{ Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+@* Index *@
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="super_container">
+
+    <!-- Slider -->
+
+
+    <div id="tf-home" class="text-center slider">
+        <div class="overlay">
+
+
+            <div class="content">
+
+                <div id="typed-strings" class="writerwordes">
+                    <p>Welcome on<i> Big Store</i></p>
+                    <p>We Are The Best<i> Supermarket</i></p>
+                    <p class="lead">We are a digital agency with <strong> experience</strong></p>
+                    <p> and with <strong>extraordinary people</strong></p>
+
+                </div>
+                <span id="typed" style="white-space:pre;"></span>
+
+                <div class="dowenicon wow bounceInUp">
+                    <a href="#tf-about" class=" page-scroll">
+                        <i class="fa fa-angle-down"></i>
+
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- special offers -->
+    <div class="speacial" id="tf-about">
+        <div class="overlay">
+            <h1 class="gallery-title wow bounceIn">speacial offers</h1>
+            <div class="line wow bounceIn">
+
+            </div>
+            <div class="container">
+                <div class="content-spaeacial">
+                    <div class="row">
+                        <div class="gallery  gallarylinks col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+                            <div align="center">
+                                <button class="btn btn-default filter-button wow bounceInUp" data-filter="all">All</button>
+                                @foreach (var item in ViewBag.categories)
+                                {
+
+
+                                    <button class="btn btn-default filter-button wow bounceInUp" data-filter="@item.CategoryID">@item.CategoryName</button>}
+
+                            </div>
+                        </div>
+
+
+                        @foreach (var item in Model)
+                        {
+
+                            <div class=" col-lg-3 col-md-4 col-sm-6 col-xs-6 filter @item.CategoryID">
+                                <div class="gallery_product wow bounceInUp delay-200">
+                                    <div class="content-product">
+                                        <div class="imagess" style="height:250px;">
+                                            <img src="~/images/@item.ProductImageURL">
+                                        </div>
+                                        @if (@item.ProductHasOffer)
+                                        {
+                                            <div class="offers">
+                                                <p style="width:40px;text-align:center">@item.ProductOfferValue%</p>
+                                            </div>
+                                        }
+                                        <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+                                            <input type="hidden" value="@User.Identity.GetUserId()" name="User_Id" />
+                                            <input type="hidden" value="1" name="quantity" min="1" />
+                                            <input type="hidden" value="@item.ProductID" name="productId" />
+
+                                            <div class="addfav">
+
+                                                <button class="favoret submitwishlist" id="@item.ProductID">
+                                                    <i class="fa fa-heart"></i>
+                                                </button>
+
+
+                                            </div>
+                                        </form>
+                                        <div class="details-product">
+                                            <div class=" title-product">
+                                                <h1>@item.Category.CategoryName</h1>
+                                                @Html.ActionLink(@item.ProductName, "productdetails", "product", new { id = item.ProductID }, new { @class = "h2" })
+                                            </div>
+                                            <div class="rstestare">
+                                                <ul>
+                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                    <li><i class="fa fa-star-half-o" aria-hidden="true"></i></li>
+                                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                                </ul>
+                                            </div>
+                                            <div class="price">
+                                                <span class="old-price">
+                                                    @item.ProductOldPrice $
+                                                </span>
+                                                <span class="new-price">@item.ProductNewPrice $</span>
+                                            </div>
+                                            @{
+                                                var x = item.ProductID;
+
+                                            }
+                                            <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+                                                <input type="hidden" value="@User.Identity.GetUserId()" name="User_Id" />
+                                                <input type="hidden" value="1" name="quantity" min="1" />
+                                                <input type="hidden" value="@item.ProductID" name="productId" />
+
+                                                <div class="add-fv-product">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                                            @*<button class="btn btn-info butcart submit" id="@item.ProductID"><i class="fa fa-shopping-cart " aria-hidden="true"></i> Add to Cart</button>*@
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <button class="btn btn-info butcart submit" id="@item.ProductID">
+                                                                    <i class="fa fa-shopping-cart" aria-hidden="true">
+                                                                    </i> Add to Cart
+                                                                </button>
+                                                            </div>
+                                                            @*<input type="button" value="add" class="submit" />*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+                    <div class="morelink wow zoomInUp">
+                        <a target="_blank" href="~/product/products">view more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Deal   -->
+    <div class="deal-he75">
+        <div class="overlay">
+            <div class="container">
+                <div class="deal-content">
+                    <h3 class="wow flash">hurry up!</h3>
+                    <h1 class=" wow bounceInUp">deal of the week</h1>
+                    <p class="wow fadeInUp">from our family farm right to your doorstepx</p>
+
+                    <div class="product">
+                        <div class="row">
+                            @{int countt = 0;
+                                Random rnd = new Random();
+                                for (int i = 0; i < Model.Count(); i++)
+
+                                {
+                                    if (countt == 4) { break; }
+
+                                    int randomnum = rnd.Next(0, Model.Count());
+                                    if (Model.ElementAt(randomnum).ProductHasOffer)
+                                    {
+                                        countt++;
+
+
+                                        <div class=" col-lg-3 col-md-4 col-sm-6 col-xs-6 filter @Model.ElementAt(randomnum).CategoryID">
+                                            <div class="gallery_product wow bounceInUp delay-200">
+                                                <div class="content-product">
+                                                    <div class="imagess" style="height:250px;">
+                                                        <img src="~/images/@Model.ElementAt(randomnum).ProductImageURL">
+                                                    </div>
+                                                    @if (@Model.ElementAt(randomnum).ProductHasOffer)
+                                                    {
+                                                        <div class="offers">
+                                                            <p>offer</p>
+                                                        </div>
+                                                    }
+
+                                                    <div class="addfav">
+                                                        <a href="#" class="favoret">
+                                                            <i class="fa fa-heart"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="details-product">
+                                                        <div class=" title-product">
+                                                            <h1>@Model.ElementAt(randomnum).Category.CategoryName</h1>
+                                                            @Html.ActionLink(@Model.ElementAt(randomnum).ProductName, "productdetails", "product", new { id = Model.ElementAt(randomnum).ProductID }, new { @class = "h2" })
+                                                        </div>
+                                                        <div class="rstestare">
+                                                            <ul>
+                                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                <li><i class="fa fa-star-half-o" aria-hidden="true"></i></li>
+                                                                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="price">
+                                                            <span class="old-price">
+                                                                @Model.ElementAt(randomnum).ProductOldPrice $
+                                                            </span>
+                                                            <span class="new-price">@Model.ElementAt(randomnum).ProductNewPrice $</span>
+                                                        </div>
+                                                        @{
+                                                            var x = Model.ElementAt(randomnum).ProductID;
+
+                                                        }
+                                                        <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+                                                            <input type="hidden" value="@User.Identity.GetUserId()" name="User_Id" />
+                                                            <input type="hidden" value="1" name="quantity" min="1" />
+                                                            <input type="hidden" value="@Model.ElementAt(randomnum).ProductID" name="productId" />
+
+                                                            <div class="add-fv-product">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                                                        @*<button class="btn btn-info butcart submit" id="@item.ProductID"><i class="fa fa-shopping-cart " aria-hidden="true"></i> Add to Cart</button>*@
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                                                            <button class="btn btn-info butcart submit" id="@Model.ElementAt(randomnum).ProductID">
+                                                                                <i class="fa fa-shopping-cart" aria-hidden="true">
+                                                                                </i> Add to Cart
+                                                                            </button>
+                                                                        </div>
+                                                                        @*<input type="button" value="add" class="submit" />*@
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+
+
+                                } }
+
+                        </div>
+                    </div>
+
+                    <div class="bg  wow tada">
+                        <div class="container">
+                            <div class="timer_wrap">
+                                <div id="counter"> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="bg-li">
+        <div class="imge-top">
+            <img src="~/Content/images/DropLinkshort.png">
+        </div>
+        <div class="container py-xl-5 py-lg-3">
+            <!-- subscribe -->
+            <div class="subscribe mx-auto">
+                <div class="icon-effect-w3 wow bounceInUp ">
+                    <span class="fa fa-envelope"></span>
+                </div>
+                <h2 class="tittle text-center font-weight-bold wow bounceInUp">Stay Updated!</h2>
+                <p class="sub-tittle text-center mt-3 mb-sm-5 mb-4 wow fadeInUp">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                <form action="#" method="post" class="subscribe-wthree pt-2 wow bounceInUp">
+                    <div class="d-flex subscribe-wthree-field">
+                        <input class="form-control" type="email" placeholder="Enter your email..." name="email" required="">
+                        <button class="btn form-control w-50" type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+            <!-- //subscribe -->
+        </div>
+    </div>
+
+    <div class="sochialicon">
+        <div class="container">
+            <div class="contenetete">
+                <a href="#" class="facebook wow bounceInUp">
+                    <i class="fa fa-facebook-f"></i>
+                </a>
+                <a href="#" class="google wow bounceInUp delay-100">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                <a href="#" class="twiter wow bounceInUp delay-200">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a href="#" class="linkedin wow bounceInUp delay-300">
+                    <i class="fa fa-linkedin"></i>
+                </a>
+                <a href="#" class="insta wow bounceInUp delay-400">
+                    <i class="fa fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="brandes-he75">
+        <div class="container">
+            <div class="owl-carousel owl-theme wow wobble delay-100">
+                <div class="item">
+                    <div class="images">
+                        <img src="~/Content/images/brand_7%20(1).png">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="images">
+                        <img src="~/Content/images/brand_7%20(2).png">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="images">
+                        <img src="~/Content/images/brand_7%20(3).png">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="images">
+                        <img src="~/Content/images/brand_7%20(4).png">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="images">
+                        <img src="~/Content/images/brand_7%20(5).png">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="images">
+                        <img src="~/Content/images/brand_7%20(6).png">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="images">
+                        <img src="~/Content/images/brand_7%20(7).png">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="images">
+                        <img src="~/Content/images/brand_7%20(8).png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="apps_dawenload">
+        <div class="container">
+            <h3 class="title wow bounceInUp">Download The <span>Application</span></h3>
+
+            <p class="text-center wow fadeInUp">Big Store</p>
+            <ul class="list-unstyled apps-lists text-center">
+                <li class=" wow bounceInLeft">
+                    <a href="#"><i class="fa fa-apple"></i>App Store</a>
+                </li>
+                <li class="otherli wow tada">
+                    <div class="logo_container">
+                        <a href="#">
+                            <span class="the">the </span>
+                            <div class="logo_text">Big Store<span></span></div>
+                            <p class="somtitle">The best supermarket</p>
+                        </a>
+                    </div>
+                </li>
+                <li class=" wow bounceInRight">
+                    <a href="#"><i class="fa fa-android"></i>Android</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+
+@section scripts{
+    <script>
+
+        $(function () {
+
+            $('.submit').on('click', function (evt) {
+                var btn = $(this)
+                var sr = $('form').serialize();
+                var x = sr.split("User_Id")[0] + "User_Id" + sr.split("User_Id")[1].split("=")[0] + "=" + sr.split("User_Id")[1].split("=")[1] + "=" + sr.split("User_Id")[1].split("=")[2] + "=" + btn.attr("id");
+                evt.preventDefault();
+
+                $.post('/cartproducts/addtocart/', x, function (data) {
+                    $.post('/Account/cartCounter/', function (data) {
+                        $('#spnCart').html(data);
+
+                        toastr.success("Product Added Successfully", "", { timeOut: 1000 });
+                    });
+
+                });
+
+
+
+
+            });
+        });
+        $(function () {
+
+            $('.submitwishlist').on('click', function (evt) {
+                var btn = $(this)
+                var sr = $('form').serialize();
+                var x = sr.split("User_Id")[0] + "User_Id" + sr.split("User_Id")[1].split("=")[0] + "=" + sr.split("User_Id")[1].split("=")[1] + "=" + sr.split("User_Id")[1].split("=")[2] + "=" + btn.attr("id");
+                evt.preventDefault();
+                $.post('/WishListProducts/Addtowishlist/', x, function (data) {
+                    $.post('/Account/wishlistCounter/', function (data) {
+                        $('#spnWish').html(data);
+                        toastr.remove();
+                        toastr.success("Product Added Successfully To you WishList");
+                    });
+
+                });
+            });
+        });
+
+    </script>
+}

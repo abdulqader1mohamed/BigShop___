@@ -1,0 +1,204 @@
+﻿@model BigShop___.Models.Product
+
+@{
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+    ViewBag.Title = "Details";
+}
+
+<div class="product-details-he75">
+    <div class="container">
+        <div class="proconde-he75 wow bounceInUp">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="imagepro wow fadeInLeft delay-100">
+                        <img src="~/images/@Model.ProductImageURL">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="conifo">
+                        <h2 class="wow bounceInRight delay-100">@Model.ProductName</h2>
+                        <div class="rstestare wow bounceInRight delay-200">
+                            <ul>
+                                @for (int y = 0; y < 5; y++)
+                                {
+                                    if (Model.ProductRate > y)
+                                    {
+                                        <li><i class="fas fa-star"></i></li>
+                                    }
+                                    else
+                                    {
+                                        <li><i class="far fa-star"></i></li>
+
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <div class="line"></div>
+                        <div class="price-stoc-he75">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="price  wow bounceInLeft delay-300">
+                                        <span class="old">
+                                            <i class="fas fa-dollar-sign"></i> @Model.ProductOldPrice
+                                        </span>
+                                        <span class="new">
+                                            <i class="fas fa-dollar-sign"></i> @Model.ProductNewPrice
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="stock wow bounceInRight delay-300">
+                                        <span>
+                                            <i class="fa fa-check"></i>  @Model.ProductStock in stock
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="addcontent-he75">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="stock wow bounceInRight delay-300 ">
+                                    <h2 class="btn-danger" style="border-radius:20px; padding:5px;">@Model.Category.CategoryName</h2>
+                                </div>
+
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="articles-he75">
+                        <p class="wow fadeInUp delay-500">
+                            @Model.ProductDescription
+                        </p>
+                    </div>
+                    <div class="line"></div>
+                    <div class="shareicon-he75">
+                        <div class="contenetete">
+
+
+                        </div>
+                    </div>
+                    <div class="prorrser-he75">
+                        <ul>
+
+
+                            <li class=" wow bounceInLeft delay-100"> Offer : @Model.ProductOfferValue</li>
+                            <li class=" wow bounceInLeft delay-200">
+                                @Html.DisplayNameFor(model => model.IsDeleted) @Html.DisplayFor(model => model.IsDeleted)
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <p style="text-align:center;">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ProductID }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+
+</div>
+
+
+
+@*<dl class="dl-horizontal">
+        <dd>
+            <img src="~/Images/@Model.ProductImageURL" height="200" width="200" />
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductStock)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductStock)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductRate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductOldPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductOldPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductNewPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductNewPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductHasOffer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductHasOffer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductOfferValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductOfferValue)
+        </dd>
+
+         <dt>
+            @Html.DisplayNameFor(model => model.isdeleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isdeleted)
+        </dd>
+
+
+
+
+
+    </dl>*@
+
+

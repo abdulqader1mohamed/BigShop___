@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+<div class="super_container">
+    @* Product Details *@
+    @{
+        ViewBag.Title = "DashBoard";
+    }
+    @*@Styles.Render("~/Content/css")*@
+    @Scripts.Render("~/bundles/modernizr")
+
+    <div class="porducts-he75 container-fluid" style="margin-top:100px">
+        <div class="container-other porducts-he75 ">
+            <div class="row  ">
+                <div class="col-lg-3 col-md-4 col-sm-12 col-xs-10">
+                    <div class="catigores">
+                        <div class="vc_row wpb_row vc_inner vc_row-fluid vc_custom_1537345397344">
+                            <div class="wpb_column vc_column_container vc_col-sm-12">
+                                <div class="vc_column-inner-nile ">
+                                    <div class="wpb_wrapper">
+                                        <div class="accordion-1 nile-accordion">
+                                            <div class=" cardhead wow bounceInLeft ">
+                                                <div class="card-header">
+                                                    <a href="#">Admin Panal</a>
+                                                </div>
+                                            </div>
+                                          <div class="card wow bounceInLeft delay-100 ">
+                                                <div class="card-header">
+                                                    @Html.ActionLink("Account Index", "showw", "Account")
+                                                </div>
+                                            </div>
+                                          
+                                            <div class="card wow bounceInLeft delay-200 ">
+                                                <div class="card-header">
+                                                    @Html.ActionLink("Category Index", "index", "Category")
+                                                </div>
+                                            </div>
+                                          
+                                          
+                                            <div class="card wow bounceInLeft delay-300 ">
+                                                <div class="card-header">
+
+                                                    @Html.ActionLink("Product Index", "index", "Product")
+                                                </div>
+                                            </div>
+                                           
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 container bg-light "style="overflow:auto">
+                    @RenderBody()
+                    @Scripts.Render("~/bundles/jquery")
+                    @Scripts.Render("~/bundles/bootstrap")
+                    @RenderSection("scripts", required: false)
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

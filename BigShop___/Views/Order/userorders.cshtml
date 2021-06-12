@@ -1,0 +1,196 @@
+@using BigShop___.Models
+@model IEnumerable<Order>
+
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "user orders";
+}
+@{ Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+@Html.Partial("BlackSection")
+<div class="super_container">
+
+
+    <div class="profile-he75">
+        <div class="container-two">
+            <div class="profile-content">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+                        @{ 
+                             
+                        }
+                        <div class="leftside">
+                            <div class="profile-user wow bounceInUp">
+                                <div class="image wow rotateIn delay-100">
+                                    <img src="/images/@Html.Action("img","Account")">
+                                </div>
+                                <div class="user-content">
+                                    <h2 class="wow flash delay-100">@Html.Action("userfullname", "Account")</h2>
+                                    <p class="wow fadeInUp delay-200">from egypt</p>
+                                    <p class="memer wow fadeIn delay-300">memmber from 22 december 202</p>
+                                    <ul class="ulilinks">
+                                        <li class=" wow bounceInUp delay-100">
+                                            <a href="https://www.facebook.com/www.facebook.com" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                        </li>
+                                        <li class=" wow bounceInUp delay-200">
+                                            <a href="https://twitter.com/?lang=arm" class="twitter"><i class="fa fa-twitter"></i></a>
+                                        </li>
+                                        <li class=" wow bounceInUp delay-300">
+                                            <a href="https://www.google.com/?hl=ar" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                        </li>
+
+                                    </ul>
+                                    <a href="~/cartproducts/addtocart" class=" wow fadeInUp delay-400">cart<i class="fa fa-shopping-cart" aria-hidden="true"><span>@Html.Action("cartCounter", "Account")</span></i></a>
+                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <a class="logout wow fadeInUp delay-200" href="javascript:document.getElementById('logoutForm').submit()">Log off<i class="fa fa-sign-up" aria-hidden="true"></i></a>
+
+                                        <div class="login_button">
+
+
+
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="user-links wow bounceInUp">
+                                <ul>
+                                    @{
+                                        string orderactive = "";
+                                        string settingactive = "";
+                                        if (ViewBag.Title == "user orders")
+                                        {
+                                            orderactive = "active";
+                                        }
+                                        else
+                                        {
+                                            settingactive = "active";
+                                        }
+
+                                    }
+
+                                    <li class=" wow bounceInLeft delay-200">
+                                        <a class="@settingactive" href="~/account/profilesetting"><i class="fa fa-gear"></i> settings</a>
+                                    </li>
+                                    <li class=" wow bounceInLeft delay-300">
+                                        <a href="~/order/userorders" class="@orderactive"><i class="fa fa-gbp"></i> Orders list (<span>@Html.Action("orderCounter", "Account")</span>)</a>
+                                    </li>
+                                    <li class=" wow bounceInLeft delay-400">
+                                        <a href="~/wishlistproducts/wishlist"><i class="fa fa-heart"></i> wish list(<span>@Html.Action("wishlistCounter", "Account")</span>)</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                    <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
+                        <div class="otherside">
+                            <div class="title-link wow fadeIn">
+                                <h1 class="wow bounceInLeft delay-300">User's Orders</h1>
+                            </div>
+
+
+                            <div class="otersidecontent " style="padding:0px;">
+
+                                <!--Accordion wrapper-->
+                                <div class="accordion  purchases   " style=" margin: 0;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        box-shadow: none
+" id="accordion" role="tablist" aria-multiselectable="true">
+                                    @{ var x = 1;}
+                                    @foreach (var order in Model)
+                                    {
+                                        <div class="card " style="background-color:transparent;border:none;outline:none;box-shadow:none">
+                                            <div class="card-header col-12 setting-he75 wow bounceInUp  " role="tab" id="headingOne">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse-@order.OrderID" aria-expanded="true" aria-controls="collapse-@order.OrderID">
+                                                    <h3 class="mb-0">
+                                                       ORDER #@x   <h6>@order.OrderDate</h6><i class="fa fa-angle-down rotate-icon"></i>
+                                                        @{ x++;}
+                                                    </h3>
+                                                </a>
+                                            </div>
+
+                                            <div id="collapse-@order.OrderID" class="collapse hide" role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="card-block bg-light" style="margin-top:2px;padding-bottom:1px;padding-top:0px">
+                                                    <div class="row otherrow ">
+
+
+                                                        @foreach (var item in order.OrderProducts)
+                                                        {
+                                                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 othercol ">
+                                                                <div class="pro-cont  ">
+                                                                    <div class="imagess">
+                                                                        <img src="~/images/@item.Product.ProductImageURL">
+                                                                    </div>
+                                                                    <div class="conproit">
+                                                                        <h2 class="text-danger">@item.Product.Category.CategoryName</h2>
+                                                                        @*@Html.ActionLink(@item.Product.ProductName, "productdetails", "product",null,new { id = item.Product.ProductID })*@
+                                                                        <a href="~/product/productdetails/@item.Product.ProductID">@item.Product.ProductName</a>
+                                                                        <div class="rstestare">
+                                                                            <ul>
+                                                                                @for (int y = 0; y < 5; y++)
+                                                                                {
+                                                                                    if (item.Product.ProductRate > y)
+                                                                                    {
+                                                                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+
+                                                                                    }
+                                                                                }
+
+
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div class="price">
+
+                                                                            <span >Old Price : <i class="fa fa-gbp" aria-hidden="true"></i>@item.ProductNewPrice</span>
+                                                                            <span class="new-price">Current Price : <i class="fa fa-gbp" aria-hidden="true"></i>@item.Product.ProductNewPrice</span>
+                                                                            <p>Quantity : @item.ProductQuantity</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+
+                                                    </div>
+
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+                            <!--/.Accordion wrapper-->
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

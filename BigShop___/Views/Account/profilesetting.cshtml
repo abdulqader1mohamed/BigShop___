@@ -1,0 +1,234 @@
+@model BigShop___.Models.ApplicationUser
+@using BigShop___
+
+@{
+    ViewBag.Title = "Profile Setting";
+  
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="super_container">
+    @Html.Partial("BlackSection")
+
+    <div class="profile-he75">
+        <div class="container-two">
+            <div class="profile-content">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+
+                        @Html.Partial("_profileside")
+                    </div>
+
+                    <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
+                        <div class="otherside">
+                            <div class="title-link wow fadeIn">
+                                <h1 class="wow bounceInLeft delay-300">account settings</h1>
+                            </div>
+
+
+
+                            <div class="otersidecontent">
+                                <div class="setting-he75 wow bounceInUp">
+                                    <h1>Profile information</h1>
+
+
+                                    @using (Html.BeginForm("profilesetting", "account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @Html.HiddenFor(model => model.Id)
+                                        <div class="row">
+
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group wow bounceInUp delay-300">
+
+                                                    <h3><i class="fa fa-user"></i>First name </h3>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+
+                                                            @Html.EditorFor(model => model.First_Name, new { htmlAttributes = new { @class = "form-control " } })
+                                                            @Html.ValidationMessageFor(model => model.First_Name, "", new { @class = "text-danger" })
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group wow bounceInUp delay-300">
+                                                    <h3><i class="fa fa-user"></i>Last Name </h3>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            @Html.EditorFor(model => model.Last_Name, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Last_Name, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group wow bounceInUp delay-300">
+                                                    <h3><i class="fa fa-envelope"></i>email</h3>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group wow bounceInUp delay-400">
+                                                    <h3><i class="fa fa-globe" aria-hidden="true"></i>User Name </h3>
+
+
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0">
+                                            <!-- image-preview-filename input [CUT FROM HERE]-->
+                                            <div class="form-group wow bounceInUp delay-200">
+                                                <h3><i class="fa fa-id-badge"></i>profile image </h3>
+                                                <div class="input-group image-preview">
+                                                    <input type="text" placeholder="chosess your profile image *" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                                                    <span class="input-group-btn">
+                                                        <div class="btn btn-default image-preview-input" >
+                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                            <span class="image-preview-input-title">Browse</span>
+                                                            <input type="file" accept="image/png, image/jpeg, image/gif" name="Image" /> <!-- rename it -->
+                                                        </div>
+                                                    </span>
+                                                </div>
+    <!-- /input-group image-preview [TO HERE]-->
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                            <div class="form-group wow bounceInUp delay-400">
+
+
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-4 col-md-10 ">
+                                                        <input type="submit" value="Save" class="btn btn-danger " style="cursor:pointer ;border:none;outline:none; color:white;border-radius:5px;height:40px " />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-12 col-lg-1">
+                                                        <p>
+                                                            <span>
+                                                                @Html.ActionLink("ChangePassword", "ChangePassword", "Manage",null,new {style= "padding:5px;border-top-right-radius:6px;" })
+
+                                                            </span>
+                                                        </p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                     
+                                    }
+                                </div>
+
+
+
+
+
+                                            <div class="setting-he75 wow bounceInUp">
+                                                <h1>Social media</h1>
+
+                                                <form action="#" method="post">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 colsocial">
+                                                            <div class="socilalinks">
+                                                                <div class="icon facebook wow fadeInLeft delay-200">
+                                                                    <i class="fa fa-facebook-f"></i>
+                                                                </div>
+                                                                <div class="input wow fadeInUp delay-200">
+                                                                    <input value="@Model.Email/facebook.com" type="text" placeholder="enter your full name *" class="form-control" required>
+                                                                </div>
+                                                                <div class="show wow fadeInRight delay-200">
+                                                                    <div class="material-switch pull-right">
+                                                                        <input checked id="someSwitchOptionDefault2" name="someSwitchOption001" type="checkbox" />
+                                                                        <label for="someSwitchOptionDefault2" class="label-default"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 colsocial">
+                                                            <div class="socilalinks">
+                                                                <div class="icon twitter wow fadeInLeft delay-300">
+                                                                    <i class="fa fa-twitter"></i>
+                                                                </div>
+                                                                <div class="input wow fadeInUp delay-300">
+                                                                    <input value="@Model.Email/twitter.com" type="text" placeholder="enter your full name *" class="form-control" required>
+                                                                </div>
+                                                                <div class="show wow fadeInRight delay-300">
+                                                                    <div class="material-switch pull-right">
+                                                                        <input checked id="someSwitchOptionDefault3" name="someSwitchOption001" type="checkbox" />
+                                                                        <label for="someSwitchOptionDefault3" class="label-default"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 colsocial">
+                                                            <div class="socilalinks">
+                                                                <div class="icon google wow fadeInLeft delay-400">
+                                                                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                                                                </div>
+                                                                <div class="input wow fadeInUp delay-400">
+                                                                    <input value="@Model.Email/google.com" type="text" placeholder="enter your full name *" class="form-control" required>
+                                                                </div>
+                                                                <div class="show wow fadeInRight delay-400">
+                                                                    <div class="material-switch pull-right">
+                                                                        <input checked id="someSwitchOptionDefault4" name="someSwitchOption001" type="checkbox" />
+                                                                        <label for="someSwitchOptionDefault4" class="label-default"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 colsocial">
+                                                            <div class="socilalinks">
+                                                                <div class="icon linkedin wow fadeInLeft delay-500">
+                                                                    <i class="fa fa-linkedin" aria-hidden="true"></i>
+                                                                </div>
+                                                                <div class="input wow fadeInUp delay-500">
+                                                                    <input value="@Model.Email/linkedin.com" type="text" placeholder="enter your full name *" class="form-control" required>
+                                                                </div>
+                                                                <div class="show wow fadeInRight delay-500">
+                                                                    <div class="material-switch pull-right">
+                                                                        <input id="someSwitchOptionDefault" name="someSwitchOption001" type="checkbox" />
+                                                                        <label for="someSwitchOptionDefault" class="label-default"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Content/js/jquery-3.2.1.min.js"></script>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>

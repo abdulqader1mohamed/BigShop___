@@ -1,0 +1,50 @@
+﻿@model BigShop___.Models.UserproductReview
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserproductReview</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductRate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserComment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Commentlikes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Commentlikes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CommentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CommentDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

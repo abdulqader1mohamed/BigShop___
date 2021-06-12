@@ -1,0 +1,70 @@
+﻿
+<div class="leftside">
+    <div class="profile-user wow bounceInUp">
+        <div class="image wow rotateIn delay-100">
+            <img src="~/images/@Model.ImageURL">
+        </div>
+        <div class="user-content">
+            <h2 class="wow flash delay-100">@Model.First_Name @Model.Last_Name</h2>
+            <p class="wow fadeInUp delay-200">from egypt</p>
+            <p class="memer wow fadeIn delay-300">member since @Model.RegisterDate</p>
+            <ul class="ulilinks">
+                <li class=" wow bounceInUp delay-100">
+                    <a href="https://www.facebook.com/www.facebook.com" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                </li>
+                <li class=" wow bounceInUp delay-200">
+                    <a href="https://twitter.com/?lang=arm" class="twitter"><i class="fa fa-twitter"></i></a>
+                </li>
+                <li class=" wow bounceInUp delay-300">
+                    <a href="https://www.google.com/?hl=ar" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                </li>
+
+            </ul>
+            <a href="~/cartproducts/addtocart" class=" wow fadeInUp delay-400">cart<i class="fa fa-shopping-cart" aria-hidden="true"><span> @Html.Action("cartCounter", "Account")</span></i></a>
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <a class="logout wow fadeInUp delay-200" href="javascript:document.getElementById('logoutForm').submit()">Log off<i class="fa fa-sign-up" aria-hidden="true"></i></a>
+
+                <div class="login_button">
+
+
+
+                </div>
+
+            }
+        </div>
+    </div>
+
+    <div class="user-links wow bounceInUp">
+        <ul>
+            @{
+                string orderactive = "";
+                string settingactive = "";
+                if (ViewBag.Title == "user orders")
+                {
+                    orderactive = "active";
+                }
+                else
+                {
+                    settingactive = "active";
+                }
+
+            }
+
+            <li class=" wow bounceInLeft delay-200">
+                <a class="@settingactive" href="~/account/profilesetting"><i class="fa fa-gear"></i> settings</a>
+            </li>
+            <li class=" wow bounceInLeft delay-300">
+
+                <a href="~/order/userorders" class="@orderactive"><i class="fa fa-gbp"></i> Orders list (<span>@Html.Action("orderCounter", "Account")</span>)</a>
+            </li>
+            <li class=" wow bounceInLeft delay-400">
+                <a href="~/wishlistproducts/wishlist"><i class="fa fa-heart"></i> wish list (<span>@Html.Action("wishlistCounter", "Account")</span>)</a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+

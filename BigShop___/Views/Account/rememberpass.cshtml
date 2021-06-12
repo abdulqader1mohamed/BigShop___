@@ -1,0 +1,20 @@
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Remember PassWord";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<div class="super_container">
+    <div class="remeberpass">
+        <h1 class="lkos wow bounceInUp delay-100">WELCOM <span class="papao">@User.Identity.GetUserName().Split('@')[0] </span></h1>
+        <p class="lead wow bounceInUp delay-200">Please Enter The Number Which Come In Your Email<a href="#"> @User.Identity.Name</a></p>
+        <form class=" wow bounceInUp delay-300" action="#" method="post">
+            <input type="text" required="" autofocus placeholder="------">
+            <div class="sadad">
+                <ul>
+                    <li><a href="#"><i class="fa fa-location-arrow"></i> Send</a></li>
+                    <li><a href="#"><i class="fa fa-refresh"></i> Resend</a></li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>

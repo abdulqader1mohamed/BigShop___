@@ -1,0 +1,226 @@
+@using BigShop___.Models
+@model IEnumerable<CartProducts>
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Payment Page";
+}
+@{ Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<div class="super_container">
+    @Html.Partial("BlackSection")
+    @* Payment Page *@
+
+
+
+    <div class="chechout-he75">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <div class="checcont wow bounceInUp">
+                        <form action="#" method="post">
+                            <div class="row">
+
+                                <div class="col*lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="personalinfo">
+                                        <h1 class="wow fadeInUp">billing address</h1>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group wow fadeInLeft delay-100">
+                                                    <h3><i class="fa fa-home"></i>full name</h3>
+                                                    <input type="text" placeholder="enter your name" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group wow fadeInLeft delay-200">
+                                                    <h3><i class="fa fa-mail"></i>email</h3>
+                                                    <input type="email" placeholder="info@example.com" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group wow fadeInLeft delay-300">
+                                                    <h3>address</h3>
+                                                    <input type="text" placeholder="123 w 15th street" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group wow fadeInLeft delay-400">
+                                                    <h3>city</h3>
+                                                    <select class="form-control" required>
+                                                        <option>egypt</option>
+                                                        <option>egypt</option>
+                                                        <option>egypt</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group wow fadeInLeft">
+                                                    <h3>state</h3>
+                                                    <select class="form-control" required>
+                                                        <option>cairo</option>
+                                                        <option>egypt</option>
+                                                        <option>egypt</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group wow fadeInLeft delay-100">
+                                                    <h3>ZIP</h3>
+                                                    <input type="text" placeholder="1000.1" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="chiller_cb wow fadeInLeft delay-200">
+                                                    <label for="myCheckbox1">shipping address same as billing</label>
+                                                    <input id="myCheckbox1" type="checkbox">
+                                                    <span></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="cardinfo">
+                                        <h1 class="wow fadeInUp">accepted cardes</h1>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group wow fadeInRight delay-100">
+                                                    <div class="images">
+                                                        <img src="~/Content/images/card.png">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group wow fadeInRight delay-200">
+                                                    <h3>name on card</h3>
+                                                    <input type="text" placeholder="enter the name on card" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group wow fadeInRight delay-300">
+                                                    <h3>creont card number</h3>
+                                                    <input type="text" placeholder="1111 2222 3333 4444" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group wow fadeInRight delay-400">
+                                                    <h3>exp month</h3>
+                                                    <select class="form-control" required>
+                                                        <option>september</option>
+                                                        <option>september</option>
+                                                        <option>september</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group wow fadeInRight">
+                                                    <h3>exp year</h3>
+                                                    <select class="form-control" required>
+                                                        <option>2020</option>
+                                                        <option>2020</option>
+                                                        <option>2020</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group wow fadeInRight delay-100">
+                                                    <h3>cvv</h3>
+                                                    <input type="text" placeholder="352" class="form-control" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="buttonsubmet wow fadeInUp delay-200">
+                                        <button type="submit">continue to checkout</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="cartsub wow bounceInUp delay-100">
+
+                        @{
+                            bool quantityerror = false;
+
+                            foreach (var item in Model)
+                            {
+
+                                if (item.ProductQuantity > item.Product.ProductStock)
+                                {
+                                    { quantityerror = true; }
+                                }
+                            }
+
+                            if (Model.Count() == 0)
+                            {
+                                <div class="totitem carttott wow fadeInRight delay-500 bg-warning"style="padding: 10px 50px">
+                                    <h3> Your Cart Is Empty</h3>
+                                </div>
+                            }
+                            
+
+                         else   if (quantityerror) 
+                            {
+                                foreach (var item in Model)
+                                {
+                                    if (item.ProductQuantity > item.Product.ProductStock)
+                                    {
+                                        <div class="totitem carttott wow fadeInRight delay-500 bg-warning"style="padding: 15px 20px">
+                                            <h3> " @item.Product.ProductName " Quentity Error</h3>
+                                        </div>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <h2 class="wow bounceIn">cart totals<span><i class="fa fa-shopping-cart"></i>@Model.Count()</span></h2>
+                                <div class="formcontent">
+                                    @{ var total = 0;
+                                    }
+                                    @foreach (var item in Model)
+                                    {
+                                        var x = item.ProductQuantity * item.Product.ProductNewPrice;
+                                        total += x;
+                                        <div class="totitem wow fadeInRight delay-100">
+                                            <p>@item.Product.ProductName </p>
+                                            <h3>$@x</h3>
+                                            @{
+                                                total += item.Product.ProductNewPrice;
+                                            }
+                                        </div>
+                                    }
+                                    <div class="totitem carttott wow fadeInRight delay-500">
+                                        <p> total</p>
+                                        <h3>$ @total</h3>
+                                    </div>
+                                    @using (Html.BeginForm("Create", "order", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken() <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="buttonsubmet wow btn  fadeInUp delay-200 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <input style="cursor:pointer" type="submit" value="continue to checkout" class="btn btn-danger checkout" />
+                                                <input type="hidden" value="@User.Identity.GetUserId()" name="userid" />
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

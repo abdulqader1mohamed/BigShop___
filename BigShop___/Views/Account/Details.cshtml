@@ -1,0 +1,110 @@
+﻿@model BigShop___.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <h2 class="mt-4">Details</h2>
+    <hr />
+    <div class="form-horizontal d-flex justify-content-center">
+
+        <hr />
+        <div class=" col-lg-9 col-md-9 col-sm-9 col-xs-9">
+
+            @using (Html.BeginForm("Details", "account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0">
+                        <div class="form-group wow bounceInUp delay-200">
+                            <h4><i style="color:red" class="fa fa-id-badge"></i> profile image </h4>
+                            <div class="input-group image-preview mt-2">
+
+                                <img src="~/Images/@Model.ImageURL" height="100" width="100" />
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2">
+                        <div class="form-group wow bounceInUp delay-300">
+
+                            <h4><i style="color:red" class="fa fa-user"></i> First name </h4>
+                            <div class="form-group">
+                                <div class="col-md-12 mt-2">
+
+                                    @Html.EditorFor(model => model.First_Name, new { htmlAttributes = new { @class = "form-control " } })
+                                    @Html.ValidationMessageFor(model => model.First_Name, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2">
+                        <div class="form-group wow bounceInUp delay-300">
+                            <h4><i style="color:red" class="fa fa-user"></i> Last Name </h4>
+                            <div class="form-group">
+                                <div class="col-md-12 mt-2">
+                                    @Html.EditorFor(model => model.Last_Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Last_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2">
+                        <div class="form-group wow bounceInUp delay-300">
+                            <h4><i style="color:red" class="fa fa-envelope"></i> email</h4>
+                            <div class="form-group">
+                                <div class="col-md-12 mt-2">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2">
+                        <div class="form-group wow bounceInUp delay-400">
+                            <h4><i style="color:red" class="fa fa-globe" aria-hidden="true"></i> User Name </h4>
+
+
+                            <div class="form-group">
+                                <div class="col-md-12 mt-2">
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            }
+            <p style="text-align:center">
+
+                @Html.ActionLink("Delete", "Delete", new { id = Model.Id })|
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Back to List", "showw")
+            </p>
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+
+
+

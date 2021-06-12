@@ -1,0 +1,807 @@
+﻿@model BigShop___.Models.Product
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Product Details";
+    ViewBag.activecategories = "active";
+
+    var CurrentProductReviews = Model.UserproductReviews.Where(r => r.ProductID == Model.ProductID).ToList();
+    var CurrentProductRate = CurrentProductReviews.Count();
+    var Currentuserreview = CurrentProductReviews.FirstOrDefault(u => u.ApplicationuserID == User.Identity.GetUserId());
+
+
+}
+@{ Layout = "~/Views/Shared/_Layout1.cshtml";
+    var AvarageReviewRate = int.Parse((Html.Action("AverageReviewRate", "UserproductReview", $"{Model.ProductID}")).ToString());
+
+}
+<div class="super_container">
+    @* Product Details *@
+
+    <div class="cart">
+        <div class="overlay">
+            <h2 class="wow tada">@Model.Category.CategoryName</h2>
+            <ul class="wow slideInUp">
+                <li>
+                    <a href="~/Home/index" class="">Home</a>
+                </li>
+                <li>
+                    <p>/</p>
+                </li>
+                <li>
+                    <a>@Model.Category.CategoryName</a>
+                </li>
+                <li>
+                    <p>/</p>
+                </li>
+                <li>
+                    <a class="activelink">@Model.ProductName</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="product-details-he75">
+        <div class="container">
+            <div class="proconde-he75 wow bounceInUp">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="imagepro wow fadeInLeft delay-100">
+                            <img src="~/images/@Model.ProductImageURL">
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="conifo">
+                            <h2 class="wow bounceInRight delay-100">@Model.ProductName</h2>
+                            <div class="rstestare wow bounceInRight delay-200">
+                                <ul>
+                                    @for (int y = 0; y < 5; y++)
+                                    {
+                                        if (AvarageReviewRate > y)
+                                        {
+                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                        }
+                                        else
+                                        {
+                                            <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                            <div class="line"></div>
+                            <div class="price-stoc-he75">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="price  wow bounceInLeft delay-300">
+                                            <span class="old">
+                                                <i class="fa fa-gbp" aria-hidden="true"></i> @Model.ProductOldPrice
+                                            </span>
+                                            <span class="new">
+                                                <i class="fa fa-gbp" aria-hidden="true"></i> @Model.ProductNewPrice
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="stock wow bounceInRight delay-300">
+                                            <span>
+                                                <i class="fa fa-check"></i>  @Model.ProductStock in stock
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="addcontent-he75">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                    <form method="post" class="formcart" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+
+                                        <ul>
+
+                                            <li class="wow bounceInUp delay-400">
+                                                <input type="hidden" value="@User.Identity.GetUserId()" name="User_Id" />
+
+                                                <input type="number" class="form-control " id="quantity" value="1" name="quantity" min="1" max="@Model.ProductID">
+                                            </li>
+                                            <li class="wow bounceInUp delay-500">
+                                                <input type="hidden" value="@Model.ProductID" name="productId" />
+                                                <button class="btn btn-danger submit" id="@Model.ProductID">
+                                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>add to cart
+                                                </button>
+
+                                            </li>
+                                        </ul>
+                                    </form>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <ul>
+                                        <li class="wow bounceInUp delay-500">
+                                            <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+                                                <input type="hidden" value="@User.Identity.GetUserId()" name="User_Id" />
+                                                <input type="hidden" value="@Model.ProductID" name="productId" />
+                                                <button class="btn btn-solid whitlise submitwishlist" id="@Model.ProductID">
+                                                    <i class="fa fa-heart-o" aria-hidden="true"></i>add to wishlist
+                                                </button>
+                                            </form>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="articles-he75">
+                            <p class="wow fadeInUp delay-500">
+                                You asked, Font Awesome delivers with 41 shiny new icons in version 4.7. Want to request new icons? Here's how. Need vectors or want to use on the desktop? Check the cheatsheet.
+                            </p>
+                        </div>
+                        <div class="line"></div>
+                        <div class="shareicon-he75">
+                            <div class="contenetete">
+                                <a href="#" class="facebook wow bounceInUp">
+                                    <i class="fa fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="google wow bounceInUp delay-100">
+                                    <i class="fa fa-google-plus"></i>
+                                </a>
+                                <a href="#" class="twiter wow bounceInUp delay-200">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                                <a href="#" class="linkedin wow bounceInUp delay-300">
+                                    <i class="fa fa-linkedin"></i>
+                                </a>
+                                <a href="#" class="insta wow bounceInUp delay-400">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="prorrser-he75">
+                            <ul>
+                                <li class=" wow bounceInLeft delay-100"><i class="fa fa-circle"></i> free worldwide shipping</li>
+                                <li class=" wow bounceInLeft delay-200"><i class="fa fa-circle"></i> 30 days return</li>
+                                <li class=" wow bounceInLeft delay-300"><i class="fa fa-circle"></i> member discount</li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="revew-he75">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-lx-12">
+
+                    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active wow bounceInLeft delay-300"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">description</a></li>
+                            <li class=" wow bounceInLeft" role="presentation"><a href="#carl" role="tab" id="carl-tab" data-toggle="tab" aria-controls="carl">reviews</a></li>
+
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active show " id="home" aria-labelledby="home-tab">
+                                <div class="tabcontent-grids  wow bounceInUp delay-100">
+                                    <div class="tab_panel_content">
+                                        <div class="tab_panel_text">
+                                            <p>
+                                                @Model.ProductDescription
+
+                                                **********************
+                                                Lorem Ipsn gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi
+                                                accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosquad litora torquent per conubia nostra, per
+                                                inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent
+                                                per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum
+                                                nunc. Lorem Ipsn gravida nibh vel velit auctor aliquet. Class aptent taciti sociosquad litora torquent per conubia nostra, per inceptos himenaeos.
+                                            </p>
+                                        </div>
+                                        <div class="tab_panel_section">
+                                            <div class="tab_panel_subtitle">Requirements</div>
+                                            <ul class="tab_panel_bullets">
+                                                <li>Lorem Ipsn gravida nibh vel velit auctor aliquet. Class aptent taciti sociosquad litora torquent.</li>
+                                                <li>Cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a.</li>
+                                                <li>Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat consequat.</li>
+                                                <li>Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio.</li>
+                                            </ul>
+                                        </div>
+                                        <div class="tab_panel_section">
+                                            <div class="tab_panel_subtitle">What is the target audience?</div>
+                                            <div class="tab_panel_text">
+                                                <p >
+                                                    This course is intended for anyone interested in learning to master his or her own body.This course is aimed at beginners, so no previous experience with hand balancing skillts is necessary Aenean viverra
+                                                    tincidunt nibh, in imperdiet nunc. Suspendisse eu ante pretium, consectetur leo at, congue quam. Nullam hendrerit porta ante vitae tristique. Vestibulum ante ipsum primis in faucibus orci luctus
+                                                    et ultrices posuere cubilia Curae.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel"  class="tab-pane fade" id="carl" aria-labelledby="carl-tab">
+                                @{
+                                    string disabled = "style=\"cursor: pointer; color:#fff\"";
+                                    if (Currentuserreview != null) { disabled = "disabled style=\"cursor: not-allowed; color:#fff\""; }
+
+                                    int TotalReviewRate = 0;
+
+                                    int star5 = 0;
+                                    int star4 = 0;
+                                    int star3 = 0;
+                                    int star2 = 0;
+                                    int star1 = 0;
+                                    if (CurrentProductRate == 0) { CurrentProductRate = 1; }
+
+                                    foreach (var item in CurrentProductReviews)
+                                    {
+                                        TotalReviewRate += item.ProductRate;
+
+                                        if (TotalReviewRate == 0) { TotalReviewRate = 1; }
+
+                                        if (item.ProductRate == 5) { star5 += 1; }
+                                        else if (item.ProductRate == 4) { star4 += 1; }
+                                        else if (item.ProductRate == 3) { star3 += 1; }
+                                        else if (item.ProductRate == 2) { star2 += 1; }
+                                        else if (item.ProductRate == 1) { star1 += 1; }
+
+
+
+                                    }
+
+
+
+                                    double _5star = (star5 * 100 / CurrentProductRate);
+                                    double _4star = (star4 * 100 / CurrentProductRate);
+                                    double _3star = (star3 * 100 / CurrentProductRate);
+                                    double _2star = (star2 * 100 / CurrentProductRate);
+                                    double _1star = (star1 * 100 / CurrentProductRate);
+
+                                }
+
+                                <div class="tabcontent-grids  wow bounceInUp">
+                                    <div class="tab_panel_content">
+                                        <div class="tab_panel_text ">
+                                            <div class="tab_panel_title">Product Review</div>
+                                            <div class="review_rating_container">
+                                                <div class="review_rating wow bounceInLeft delay-100">
+                                                    <div class="rating_num" id="avgReviews">@AvarageReviewRate</div>
+                                                    <div class="stars">
+                                                        <ul id="Reviewstars">
+                                                            @for (int y = 0; y < 5; y++)
+                                                            {
+                                                                if (AvarageReviewRate > y)
+                                                                {
+                                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                                                }
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                    <div class="review_rating_text">(<span id="totalRating">@CurrentProductRate</span> Ratings)</div>
+                                                </div>
+                                                <div class="review_rating_bars wow bounceInRight delay-100">
+                                                    <ul>
+                                                        <li>
+                                                            <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+
+                                                                <input type="hidden" name="ProductRate" value="5" />
+                                                                <input type="hidden" name="ProductID" value="@Model.ProductID" />
+
+                                                                <input type="submit" @disabled class="btn btn-success submitRate" id="5"  value="5 Star" />
+
+                                                                <div class="review_rating_bar">
+                                                                    <div id="rateBar5" style="width:@_5star%;"></div>
+                                                                </div>
+
+                                                            </form>
+
+                                                        </li>
+                                                        <li>
+                                                            <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+
+                                                                <input type="hidden" name="ProductRate" value="4" />
+                                                                <input type="hidden" name="ProductID" value="@Model.ProductID" />
+
+                                                                <input type="submit"  @disabled class="btn btn-success submitRate" id="4"  value="4 Star" />
+
+                                                                <div class="review_rating_bar">
+                                                                    <div id="rateBar4" style="width:@_4star%;"></div>
+                                                                </div>
+
+                                                            </form>
+
+                                                        </li>
+                                                        <li>
+                                                            <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+
+                                                                <input type="hidden" name="ProductRate" value="3" />
+                                                                <input type="hidden" name="ProductID" value="@Model.ProductID" />
+
+                                                                <input type="submit" @disabled class="btn btn-success submitRate" id="3"  value="3 Star" />
+
+                                                                <div class="review_rating_bar">
+                                                                    <div id="rateBar3" style="width:@_3star%;"></div>
+                                                                </div>
+
+                                                            </form>
+
+                                                        </li>
+                                                        <li>
+                                                            <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+
+                                                                <input type="hidden" name="ProductRate" value="2" />
+                                                                <input type="hidden" name="ProductID" value="@Model.ProductID" />
+
+                                                                <input type="submit" @disabled  class="btn btn-success submitRate" id="2"  value="2 Star" />
+
+                                                                <div class="review_rating_bar">
+                                                                    <div id="rateBar2" style="width:@_2star%;"></div>
+                                                                </div>
+
+                                                            </form>
+
+                                                        </li>
+                                                        <li>
+                                                            <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+
+                                                                <input type="hidden" name="ProductRate" value="1" />
+                                                                <input type="hidden" name="ProductID" value="@Model.ProductID" />
+
+                                                                <input type="submit" @disabled class="btn btn-success submitRate" id="1" value="1 Star" />
+
+                                                                <div class="review_rating_bar">
+                                                                    <div id="rateBar1" style="width:@_1star%;"></div>
+                                                                </div>
+
+                                                            </form>
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="comments_container">
+
+
+                                                <ul class="comments_list">
+                                                    <li id="addlastcomment"></li>
+                                                    @if (Currentuserreview != null)
+                                                    {
+                                                        if (Currentuserreview.UserComment != null)
+                                                        {
+                                                            <li class=" wow bounceInUp delay-100">
+                                                                <div class="comment_item d-flex flex-row align-items-start jutify-content-start">
+                                                                    <div class="comment_image">
+                                                                        <img style="height: 100px; width: 100px ;border-radius:0px" src="~/images/@Html.Action("GetUserImage", "UserproductReview", new { userid = Currentuserreview.ApplicationuserID })" alt="">
+                                                                    </div>
+                                                                    <div class="comment_content">
+
+                                                                        <div class="comment_title_container d-flex flex-row align-items-center justify-content-start">
+                                                                            <div class="comment_author"><a href="#">@Html.Action("GetUserName", "UserproductReview", new { userid = Currentuserreview.ApplicationuserID })</a></div>
+                                                                            <div class="stars">
+
+                                                                                <ul id="stars">
+                                                                                    @for (int y = 0; y < 5; y++)
+                                                                                    {
+                                                                                        if (Currentuserreview.ProductRate > y)
+                                                                                        {
+                                                                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                                                                        }
+                                                                                    }
+                                                                                </ul>
+
+                                                                            </div>
+                                                                            @{
+                                                                                var days = (DateTime.Now.Date - Currentuserreview.CommentDate).Days;
+
+                                                                            }
+                                                                            <div class="comment_time ml-auto">@days day ago</div>
+                                                                        </div>
+                                                                        <div class="comment_text">
+                                                                            <p>@Currentuserreview.UserComment</p>
+                                                                        </div>
+                                                                        <div class="comment_extras d-flex flex-row align-items-center justify-content-start">
+                                                                            <div class="comment_extra comment_likes"><a href="#"><i class="fa fa-heart" aria-hidden="true"></i><span>10</span></a></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li id="addcommentitemlist">
+                                                                <div class="add_comment_container  wow bounceInUp delay-100 ">
+                                                                    <div class="add_comment_title">
+
+                                                                        <input class="btn btn-dark" type="button" id="addcomment" value="Add a Comment" />
+
+                                                                        <i class="fa fa-comment"></i>
+                                                                    </div>
+
+                                                                </div>
+                                                            </li>
+                                                        }
+
+                                                    }
+
+                                                    @foreach (var item in CurrentProductReviews.Where(r => r.UserComment != null).OrderByDescending(r => r.CommentDate))
+                                                    {
+                                                        if (Currentuserreview != null)
+                                                        {
+
+                                                            if (Currentuserreview.UserComment != null && Currentuserreview.ApplicationuserID == item.ApplicationuserID)
+                                                            { continue; }
+                                                        }
+
+
+                                                        <li class=" wow bounceInUp delay-100">
+                                                            <div class="comment_item d-flex flex-row align-items-start jutify-content-start">
+                                                                <div class="comment_image"><img style="height: 90px; width: 90px ;border-radius:0px" src="~/images/@Html.Action("GetUserImage", "UserproductReview", new { userid = item.ApplicationuserID })" alt=""></div>
+
+                                                                <div class="comment_content">
+
+                                                                    <div class="comment_title_container d-flex flex-row align-items-center justify-content-start">
+                                                                        <div class="comment_author"><a href="#">@Html.Action("GetUserName", "UserproductReview", new { userid = item.ApplicationuserID })</a></div>
+                                                                        <div class="stars">
+
+                                                                            <ul id="stars">
+                                                                                @for (int y = 0; y < 5; y++)
+                                                                                {
+                                                                                    if (item.ProductRate > y)
+                                                                                    {
+                                                                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                                                                    }
+                                                                                }
+                                                                            </ul>
+
+                                                                        </div>
+                                                                        @{
+                                                                            var Days = (DateTime.Now.Date - item.CommentDate.Date).Days;
+
+
+
+                                                                        }
+                                                                        <div class="comment_time ml-auto">@Days day ago</div>
+                                                                    </div>
+                                                                    <div class="comment_text">
+                                                                        <p>@item.UserComment</p>
+                                                                    </div>
+                                                                    <div class="comment_extras d-flex flex-row align-items-center justify-content-start">
+                                                                        <div class="comment_extra comment_likes">
+                                                                            <a href="#">
+                                                                                <i class="fa fa-heart" aria-hidden="true">
+                                                                                </i>
+                                                                                <span>@item.Commentlikes</span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </li>
+                                                    }
+
+                                                    @if (!Request.IsAuthenticated)
+                                                    {
+                                                        <li>
+                                                            <div class="add_comment_text">You must be <a href="~/Account/login">logged</a> in to post a comment.</div>
+                                                        </li>
+                                                    }
+                                                </ul>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="relatedpro-he75 wow bounceInUp delay-100">
+        <div class="container">
+            <div class="prorelcont">
+                <div class="title">
+                    <h2>related products</h2>
+                </div>
+                <div class="owl-carousel owl-theme">
+
+                    @foreach (var item in Model.Category.Products)
+                    {
+                        <div class="item" style="height:358px">
+                            <div class="gallery_product">
+                                <div class="content-product">
+                                    <div class="imagess" style="height:150px">
+                                        <img src="~/images/@item.ProductImageURL">
+                                    </div>
+                                    @if (item.ProductHasOffer)
+                                    {
+                                        <div class="offers">
+                                            <p>offer</p>
+                                        </div>}
+                                    <div class="details-product">
+                                        <div class=" title-product">
+                                            <h1>@item.Category.CategoryName</h1>
+                                            @Html.ActionLink(@item.ProductName, "productdetails", new { id = item.ProductID, @class = "h2" })
+                                        </div>
+                                        <div class="rstestare">
+                                            <ul>
+                                                @for (int y = 0; y < 5; y++)
+                                                {
+                                                    if (item.ProductRate > y)
+                                                    {
+                                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                        <div class="price">
+                                            <span class="old-price">
+                                                @item.ProductOldPrice $
+                                            </span>
+                                            <span class="new-price">@item.ProductNewPrice $</span>
+                                        </div>
+                                        <div class="add-fv-product">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <form method="post" class="formcart" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+                                                        <input type="hidden" value="@User.Identity.GetUserId()" name="User_Id" />
+                                                        <input type="hidden" value="@Model.ProductID" name="productId" />
+
+                                                        <button class="btn btn-danger submit" id="@Model.ProductID" style="margin:15px -10px; padding:3px 15px;">
+                                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>add to cart
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="height:5px">
+                                                    @*<a class="favoret">
+                                                            <i class="fa fa-heart active"></i>
+                                                        </a>*@
+                                                    <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+                                                        <input type="hidden" value="@User.Identity.GetUserId()" name="User_Id" />
+                                                        <input type="hidden" value="@Model.ProductID" name="productId" />
+                                                        <button class=" submitwishlist " id="@Model.ProductID" style="outline: none; background-color: transparent; border: none; margin-left: 10px; margin-top: 5px">
+                                                            <i class="fa fa-heart " style="color:darkgray ; outline:none; font-size:30px; border-radius: 50%; padding: 9px " aria-hidden="true"></i>add to cart
+
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @* Logo-----ShowMore *@
+                    <div class="item" style="height:340px">
+                        <div class="loadmore-he75">
+                            <div class="logo_container">
+                                <a href="~/Home/index">
+                                    <span class="the">the </span>
+                                    <div class="logo_text">Big Store<span></span></div>
+                                    <p class="somtitle">The best supermarket</p>
+                                </a>
+                            </div>
+                            <a class="view" href="~/product/products" target="_blank">view more</a>
+                        </div>
+                    </div>
+                    @* End Logo Show More ---------------- *@
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("Services")
+</div>
+
+
+
+
+@section scripts{
+    <script src="~/Scripts/bootbox.js"></script>
+    <script>
+
+        $(function () {
+
+            $('.submit').on('click', function (evt) {
+                var btn = $(this)
+                var sr = $('form').serialize();
+                var x = sr.split("User_Id")[0] + "User_Id" + sr.split("User_Id")[1].split("=")[0] + "=" + sr.split("User_Id")[1].split("=")[1] + "=" + sr.split("User_Id")[1].split("=")[2] + "=" + btn.attr("id");
+                evt.preventDefault();
+                $.post('/cartproducts/addtocart/', x, function (data) {
+                    $.post('/Account/cartCounter/', function (data) { $('#spnCart').html(data); toastr.success("Product has been Added to your Cart Successfully"); });
+
+                });
+
+
+            });
+        });
+        $(function () {
+
+            $('.submitwishlist').on('click', function (evt) {
+                var btn = $(this)
+                var sr = $('form').serialize();
+                var x = sr.split("User_Id")[0] + "User_Id" + sr.split("User_Id")[1].split("=")[0] + "=" + sr.split("User_Id")[1].split("=")[1] + "=" + sr.split("User_Id")[1].split("=")[2] + "=" + btn.attr("id");
+                evt.preventDefault();
+
+                $.post('/WishListProducts/Addtowishlist/', x, function (data) {
+                    $.post('/Account/wishlistCounter/', function (data) {
+                        $('#spnWish').html(data);
+                        toastr.remove();
+                        toastr.success("Product has been Added Successfully To your WishList");
+                    });
+
+                });
+            });
+        });
+
+        $(function () {
+
+            $('.submitRate').on('click', function (evt) {
+                btn = $(this);
+                var sr = $('form').serialize();
+                var x = sr.split("User_Id")[0] + "ProductID=" +@Model.ProductID + "&ProductRate=" + btn.attr("id");
+                evt.preventDefault();
+
+                $.post('/UserproductReview/AddRate/', x, function (data) {
+                    $.post('/UserproductReview/ReviewBar/@Model.ProductID', x, function (data) {
+
+                        var bar5 = parseInt(data.split("&")[0]);
+                        var bar4 = parseInt(data.split("&")[1]);
+                        var bar3 = parseInt(data.split("&")[2]);
+                        var bar2 = parseInt(data.split("&")[3]);
+                        var bar1 = parseInt(data.split("&")[4]);
+
+                        var totalReviews = parseInt(data.split("&")[5]);
+
+                        $('#rateBar5').css("width", `${bar5}%`).css({ "transition" : "width 2s"});
+                        $('#rateBar4').css("width", `${bar4}%`).css({ "transition" : "width 2s"});
+                        $('#rateBar3').css("width", `${bar3}%`).css({ "transition" : "width 2s"});
+                        $('#rateBar2').css("width", `${bar2}%`).css({ "transition" : "width 2s"});
+                        $('#rateBar1').css("width", `${bar1}%`).css({ "transition" : "width 2s"});
+
+
+                        var totalstars = (bar1 + bar2 * 2 + bar3 * 3 + bar4 * 4 + bar5 * 5) * 0.01 * (totalReviews);
+                        var avg = parseInt(totalstars / totalReviews);
+                        $('#totalRating').html(totalReviews);
+                        $('#avgReviews').html(avg);
+                        $(".submitRate").prop("disabled", true);
+                        $('.comments_list').prepend(` <li id="addcommentitemlist">
+                                                                <div class="add_comment_container  wow bounceInUp delay-100 ">
+                                                                    <div class="add_comment_title">
+                                                                        <input class="btn btn-dark" type="button" id="addcomment" value="Add a Comment" />
+                                                                        <i class="fa fa-comment"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </li>`);
+                        toastr.success("Your Review has been Added Successfully");
+                        $('#Reviewstars').html("");
+                        for (var i = 0; i < 5; i++) {
+                            if (i < avg) {
+                                $('#Reviewstars').append('<li><i class="fa fa-star" aria-hidden="true"></i></li>');
+                            }
+                            else {
+                                $('#Reviewstars').append('<li><i class="fa fa-star-o" aria-hidden="true"></i></li>');
+                            }
+                        }
+                    });
+                });
+            });
+        });
+
+
+        $(function () {
+            var starsfromscript = 0;
+            $(document).on("click", '#addcomment', function () {
+                btn = $(this);
+                var sr = $('form').serialize();
+                var x = sr.split("User_Id")[0] + "ProductID=" +@Model.ProductID + "&ProductRate=" + btn.attr("id");
+                $.post('/UserproductReview/GetUserRate/@Model.ProductID', x, function (data) {
+                    starsfromscript = parseInt(data);
+                });
+
+                bootbox.prompt({
+                    title: "Write Down your Comment here",
+                    size: 'lg',
+                    onEscape: true,
+                    backdrop: true,
+                    centerVertical: false,
+                    callback: function(result) {
+
+                        if (result != null) {
+                            $('.comments_list').prepend(`<ul class="comments_list">
+
+            <li class=" wow bounceInUp delay-100">
+                                                                    <div class="comment_item d-flex flex-row align-items-start jutify-content-start">
+                                                                        <div class="comment_image">
+                                                                            <img style="height: 100px; width: 100px ;border-radius:0px" src="~/images/@Html.Action("GetUserImage", "UserproductReview", new { userid = User.Identity.GetUserId() })" alt="">
+                                                                        </div>
+                                                                        <div class="comment_content">
+
+                                                                            <div class="comment_title_container d-flex flex-row align-items-center justify-content-start">
+                                                                                <div class="comment_author"><a href="#">@Html.Action("GetUserName", "UserproductReview", new { userid = User.Identity.GetUserId() })</a></div>
+                                                                                <div class="stars">
+                                                                                    <ul id="starsfromscript">
+
+                                                                                    </ul>
+
+                                                                                </div>
+
+                                                                                <div class="comment_time ml-auto">0 day ago</div>
+                                                                            </div>
+                                                                            <div class="comment_text">
+                                                                                <p>${result}</p>
+                                                                            </div>
+                                                                             <div class="add_comment_container  wow bounceInUp delay-100 ">
+                                                                         <div class="comment_extras d-flex flex-row align-items-center justify-content-start">
+                                                                                <div class="comment_extra comment_likes"><a href="#"><i class="fa fa-heart" aria-hidden="true"></i><span>0</span></a></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div></li></ul>`);
+                            for (var y = 0; y < 5; y++) {
+                                if (starsfromscript > y) {
+                                    $('#starsfromscript').append(`<li><i class="fa fa-star" aria-hidden="true"></i></li>`);
+                                }
+                                else {
+                                    $('#starsfromscript').append(`<li><i class="fa fa-star-o" aria-hidden="true"></i></li>`);
+                                }
+                            }
+
+                            var sr = $('form').serialize();
+                            var x = sr.split("User_Id")[0] + "ProductID=@Model.ProductID&UserComment=" + result;
+
+                            $.post('/UserproductReview/AddComment/', x);
+
+                            $('#addcommentitemlist').hide(1000);
+                        }
+                        }
+
+                    });
+                });
+            });
+
+
+    </script>
+
+
+}
+
+
+
+
+
+

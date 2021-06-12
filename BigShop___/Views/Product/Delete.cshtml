@@ -1,0 +1,106 @@
+﻿@model BigShop___.Models.Product
+
+@{
+    ViewBag.Title = "Delete";
+}
+@{ Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductStock)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductStock)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductRate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductOldPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductOldPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductNewPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductNewPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductHasOffer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductHasOffer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductOfferValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductOfferValue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductImageURL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductImageURL)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

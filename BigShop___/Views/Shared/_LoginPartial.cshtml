@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNet.Identity
+<div class="top_bar_login ml-auto  wow bounceInDown">
+    @{
+        var x = "Hello " + User.Identity.GetUserName() + "!";
+
+       // var y = @User.Identity.GetUserId()+"."+ "JPG";
+        //var b = @User.Identity.GetUserId()+"."+ "JPG";
+    }
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <a class="login_button loginnng m-0 pt-2 " href="javascript:document.getElementById('logoutForm').submit()"><h6>Log off</h6></a>
+
+            <div class="login_button">
+
+                <a href="~/account/profilesetting">
+                    @*<picture>
+                        <source srcset="~/images/@y" type="image/PNG">
+                        <source srcset="~/images/@B" type="image/JPG">
+
+                        <img src="~/images/@y">
+                    </picture>*@
+                   
+                    <img src="~/images/@Html.Action("img","Account")">
+                    <span>@x </span>
+                </a>
+
+            </div>
+
+        }
+    }
+    else
+    {
+<h6>
+    @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "login_button loginnng m-0 pt-2" })
+    @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "login_button loginnng m-0 pt-2" })
+
+</h6>
+    }
+
+
+
+</div>
+

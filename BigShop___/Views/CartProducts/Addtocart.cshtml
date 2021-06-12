@@ -1,0 +1,482 @@
+@using Microsoft.AspNet.Identity
+@using BigShop___.Models
+@model IEnumerable<CartProducts>
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    string warningmessage = "";
+
+
+}
+
+
+<style>
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+    tbody > tr:hover {
+        background-color: honeydew
+    }
+</style>
+
+@* Cart *@
+<div class="super_container">
+    @Html.Partial("BlackSection");
+
+    <div class="catr-table">
+        <div class="container">
+            <div style="overflow-x: auto; box-shadow: 0 0 10px #d8d8d8;">
+
+
+                <table class="contenttable table table-bordered ">
+                    <thead>
+                        <tr>
+                            <th>
+                                <p>img</p>
+                            </th>
+                            <th>
+                                <p>product</p>
+                            </th>
+                            <th>
+                                <p>price</p>
+                            </th>
+                            <th>
+                                <p>quantity</p>
+                            </th>
+                            <th>
+                                <p>total price</p>
+                            </th>
+                            <th>
+                                <p>remove</p>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int total = 0;
+
+                            bool confirmprocess = true;
+
+                        }
+                        @if (Model.Count() == 0)
+                        {
+
+
+                            <tr>
+                                <td colspan="6" class="bg-warning"><h2>Your Cart is Empty <br /><h5>You can see our Products From <a class="btn-link " href="~/product/products">Here</a></h5></h2></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                {
+                                    if (item.ProductQuantity > item.Product.ProductStock)
+                                    {
+                                        confirmprocess = false;
+                                        warningmessage += $" Product :{item.Product.ProductName } does not contain the required Quantity in the stock, Current Product Stock :{item.Product.ProductStock}";
+                                    }
+                                }
+
+                                <tr class="wow bounceInUp delay-100">
+                                    <td style="width:100px;">
+                                        <div class="imgess">
+                                            <a href="~/product/productdetails/@item.Product.ProductID"> <img src="~/images/@item.Product.ProductImageURL"></a>
+
+
+                                        </div>
+
+                                    </td>
+
+                                    <td style="width:400px;">
+
+                                        <div class="name">
+
+                                            <a href="~/product/productdetails/@item.Product.ProductID"><h3> @item.Product.ProductName</h3></a>
+
+                                        </div>
+                                        <div class="rstestare">
+                                            <ul>
+                                                @for (float y = 0; y < 5; y++)
+                                                {
+                                                    if (item.Product.ProductRate > y)
+                                                    {
+                                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+
+                                                    }
+                                                }
+
+
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td  style="text-align: center; ">
+                                        <p style=" vertical-align: middle; ">
+                                            @(item.Product.ProductNewPrice) $
+                                        </p>
+                                        <input style="visibility:hidden;width:0px;height:0px; background-color:transparent;border:none" value="@(item.Product.ProductNewPrice)" type="number" disabled min="1" class="form-control">
+
+                                    </td>
+                                    <td style="width: 200px;">
+
+                                        <form method="post" style="display:inline-block" class="formcart" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+                                            <input type="hidden" value="@User.Identity.GetUserId()" name="User_Id" />
+                                            <input type="hidden" value="1" name="quantity" />
+
+                                            <input type="hidden" value="@item.ProductID" name="productId" />
+                                            <button class="btn btn-default minus" id="@item.ProductID"> <i class="fa fa-minus" style="color: #b32828;"></i></button>
+
+                                        </form>
+                                        <input disabled style="display:inline-block;width:70px; background-color:transparent;border:none" value="@item.ProductQuantity" type="number"  class="form-control">
+                                        <form style="display:inline-block" method="post" class="formcart" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+                                            <input type="hidden" value="@User.Identity.GetUserId()" name="User_Id" />
+
+                                            <input type="hidden" value="1" name="quantity" />
+
+                                            <input type="hidden" value="@item.ProductID" name="productId" />
+                                            <button class="btn btn-default plus" id="@item.ProductID"> <i class="fa fa-plus" style="color: #b32828;"></i></button>
+
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <p>
+                                            @{
+                                                var x = item.Product.ProductNewPrice * item.ProductQuantity;
+                                            }
+                                            <span class="total">  @x</span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        @{total += x;}
+                                        <form method="post" class="formcart" data-ajax="true" data-ajax-method="post" data-ajax-complete="completed">
+                                            <input type="hidden" value="@User.Identity.GetUserId()" name="User_Id" />
+                                            <input type="hidden" value="1" name="quentity" />
+
+                                            <input type="hidden" value="@item.ProductID" name="productId" />
+
+                                            <button class="icon-cart submit" id="@item.ProductID">
+                                                <i class="fa fa-trash"></i>
+
+                                            </button>
+                                        </form>
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="carttotal">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="calcshipping wow bounceInUp delay-100">
+                            <h2>calculate shipping</h2>
+                            <form action="#" method="post">
+                                <div class="formcontent">
+                                    <select class="form-control" required>
+                                        <option>Select Your Country</option>
+                                        <option>Egypt</option>
+                                        <option>Egypt</option>
+                                    </select>
+                                    <select class="form-control" required>
+                                        <option>Select Your State</option>
+                                        <option>Damietta</option>
+                                        <option>Cairo</option>
+                                        <option>Giza</option>
+                                    </select>
+                                    <input type="text" class="form-control" placeholder="enter your zip code" required>
+                                </div>
+                                <div class="buttonsubmet">
+                                    <button type="submit">update shipping</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="calcshipping wow bounceInUp delay-200">
+                            <h2>coupon code</h2>
+                            <form action="#" method="post">
+                                <div class="formcontent">
+                                    <p class="lead">put the discount code or code in the box below to get a discount for the product</p>
+                                    <input type="text" class="form-control" placeholder="enter your coupon code" required>
+                                </div>
+                                <div class="buttonsubmet">
+                                    <button type="submit">redeem your code</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="calcshipping wow bounceInUp delay-300">
+                            <h2>cart totals</h2>
+                            <form action="#" method="post">
+                                <div class="formcontent">
+                                    <div class="totitem">
+                                        <p>cart subtotals</p>
+                                        <h3 class="stotal">$ <span class="subtotal"> @total</span></h3>
+                                    </div>
+                                    <div class="totitem">
+                                        @{ double shiping = total * 0.12;
+                                            double cobun = total * 0.05;
+                                            double aftershippingandcobon = total + shiping - cobun;
+
+                                        }
+                                        <p>shipping and handlings</p>
+                                        <h3>$<span id="shipping">@shiping</span></h3>
+                                    </div>
+                                    <div class="totitem">
+                                        <p>coupon code</p>
+                                        <h3>-$ <span id="coupon">@cobun</span></h3>
+                                    </div>
+
+                                    <div class="totitem carttott">
+                                        <p>cart total</p>
+                                        <h3>$ <span id="supertotal">@aftershippingandcobon</span></h3>
+                                    </div>
+                                </div>
+                             
+
+                                    @if (Model.Count() == 0)
+                                    {<div class="buttonsubmet " style="border:none">
+                                            <a id="checkout" style="border:none" class="bg-warning">Your Cart is Empty</a>
+                                        </div>
+                                    }
+                                    else if (!confirmprocess)
+                                    {
+                                        <div class="buttonsubmet " style="border:none">
+                                            <a id="quantityerror" style="border:none" class="bg-warning">Quantity Warning</a>
+                                        </div>
+                                    }
+                                    else
+                                    {<div class="buttonsubmet">
+                                            <a href="~/Home/PaymentPage">place your order now!</a>
+                                        </div>
+                                    }
+</form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @Html.Partial("services")
+
+</div>
+@section scripts{
+    <script src="~/Scripts/bootbox.js"></script>
+    <script>
+        $(function () {
+            markup = '<tr><td colspan="6" class="bg-warning"><h2>Your Cart is Empty <br /><h5>You can see our Products From <a class="btn-link " href="../product/products">Here</a></h5></h2></td></tr>';
+            tableBody = $("table tbody");
+          
+
+            $('.minus').on('click', function (evt) {
+                var btn = $(this);
+                var sr = $('form').serialize();
+                var x = sr.split("User_Id")[0] + "User_Id" + sr.split("User_Id")[1].split("=")[0] + "=" + sr.split("User_Id")[1].split("=")[1] + "=" + sr.split("User_Id")[1].split("=")[2] + "=" + btn.attr("id");
+                evt.preventDefault();
+
+
+                $.post('/cartproducts/DeleteConfirmed/', x, function (data) {
+                    $.post('/Account/cartCounter/', function (data) {
+                        var v = btn.parents("tr").find("td:eq(3) input[type='number']").val();
+                        if (v > 1) {
+                            btn.parents("tr").find("td:eq(3) input[type='number']").val(v - 1);
+                        }
+                        else {
+                            btn.parents("tr").remove();
+                        }
+
+                        if (document.getElementsByTagName("tr").length == 1) {
+
+                            tableBody.append(markup);
+                        }
+                        $('#spnCart').html(data);
+                        toastr.success("Product has been deleted Successfully");
+
+
+                        var quantity = btn.parents("tr").find("td:eq(3) input[type='number']").val();
+                        var productPrice = btn.parents("tr").find("td:eq(2) input[type='number']").val();
+                        var productTotalPrice = quantity * productPrice;
+
+                        btn.parents("tr").find("td:eq(4)").html(`<p><span class="total">${productTotalPrice}</span></p>`);
+
+                        var subTotalPrice = 0;
+                        $.post('/CartProducts/Subtotal/', function (data) {
+                            subTotalPrice = parseInt(data);
+                            
+                            shipping = subTotalPrice * 0.12;
+                            coupon = subTotalPrice * 0.05;
+                            supertotal = subTotalPrice + shipping - coupon;
+
+                            $('.subtotal').html(subTotalPrice.toFixed(2));
+                            $('#shipping').html(shipping.toFixed(2));
+                            $('#coupon').html(coupon.toFixed(2));
+                            $('#supertotal').html(supertotal.toFixed(2));
+
+                        });
+
+                    });
+
+                });
+
+            });
+
+
+            $('.plus').on('click', function (evt) {
+                var btn = $(this)
+                var sr = $('form').serialize();
+                var x = sr.split("User_Id")[0] + "User_Id" + sr.split("User_Id")[1].split("=")[0] + "=" + sr.split("User_Id")[1].split("=")[1] + "=" + sr.split("User_Id")[1].split("=")[2] + "=" + btn.attr("id");
+                evt.preventDefault();
+                $.post('/cartproducts/addtocart/', x, function (data) {
+                    $.post('/Account/cartCounter/', function (data) {
+                        var p = parseInt(btn.parents("tr").find("td:eq(3) input[type='number']").val());
+
+
+                        btn.parents("tr").find("td:eq(3) input[type='number']").val(p + 1);
+
+
+                        $('#spnCart').html(data);
+
+                        toastr.success("Product Added Successfully", "", { timeOut: 1000 });
+
+
+
+                        var quantity = btn.parents("tr").find("td:eq(3) input[type='number']").val();
+                        var productPrice = btn.parents("tr").find("td:eq(2) input[type='number']").val();
+                        var productTotalPrice = quantity * productPrice;
+
+                        btn.parents("tr").find("td:eq(4)").html(`<p><span class="total">${productTotalPrice}</span></p>`);
+
+                        var subTotalPrice = 0;
+                        $.post('/CartProducts/Subtotal/', function (data) {
+                            subTotalPrice = parseInt(data);
+                            
+                            shipping = subTotalPrice * 0.12;
+                            coupon = subTotalPrice * 0.05;
+                            supertotal = subTotalPrice + shipping - coupon;
+
+                            $('.subtotal').html(subTotalPrice.toFixed(2));
+                            $('#shipping').html(shipping.toFixed(2));
+                            $('#coupon').html(coupon.toFixed(2));
+                            $('#supertotal').html(supertotal.toFixed(2));
+
+                        });
+                    });
+                });
+            });
+
+
+        
+
+
+            $('.submit').on('click', function (evt) {
+                var btn = $(this);
+                var sr = $('form').serialize();
+                var x = sr.split("User_Id")[0] + "User_Id" + sr.split("User_Id")[1].split("=")[0] + "=" + sr.split("User_Id")[1].split("=")[1] + "=" + sr.split("User_Id")[1].split("=")[2] + "=" + btn.attr("id");
+                evt.preventDefault();
+
+                bootbox.dialog({
+                    title: 'Delete',
+                    message: '<p >Do you need to remove all quantity of this product from your Cart</p>',
+                    size: 'sm',
+                    onEscape: true,
+                    backdrop: true,
+                    buttons: {
+                        fee: {
+                            label: 'OK',
+                            className: 'btn-danger',
+                            callback: function (data) {
+                                $.post('/cartproducts/Deleteall/', x, function (data) {
+                                    $.post('/Account/cartCounter/', function (data) {
+                                        btn.parents("tr").remove();
+                                        if (document.getElementsByTagName("tr").length == 1) {
+                                            tableBody.append(markup);
+                                        }
+                                        $('#spnCart').html(data);
+                                        toastr.success("Product has been deleted Successfully");
+
+
+
+                                        var quantity = btn.parents("tr").find("td:eq(3) input[type='number']").val();
+                                        var productPrice = btn.parents("tr").find("td:eq(2) input[type='number']").val();
+                                        var productTotalPrice = quantity * productPrice;
+
+                                        btn.parents("tr").find("td:eq(4)").html(`<p><span class="total">${productTotalPrice}</span></p>`);
+
+                                        var subTotalPrice = 0;
+                                        $.post('/CartProducts/Subtotal/', function (data) {
+                                            subTotalPrice = parseInt(data);
+                                           
+                                            shipping = subTotalPrice * 0.12;
+                                            coupon = subTotalPrice * 0.05;
+                                            supertotal = subTotalPrice + shipping - coupon;
+
+                                            $('.subtotal').html(subTotalPrice.toFixed(2));
+                                            $('#shipping').html(shipping.toFixed(2));
+                                            $('#coupon').html(coupon.toFixed(2));
+                                            $('#supertotal').html(supertotal.toFixed(2));
+
+                                        });
+                                       
+                                    });
+
+                                });
+                            }
+                        },
+                    }
+                })
+            });
+        });
+    </script>
+
+
+    <script>
+        $('#checkout').on("click", function () {
+            bootbox.dialog({
+                title: 'Warning',
+                message: '<p >Your Cart is Empty</p>',
+                size: 'sm',
+                onEscape: true,
+                backdrop: true,
+                buttons: {
+                    fee: {
+                        label: 'OK',
+                        className: 'btn-warning',
+                        callback: function () {
+                        }
+                    },
+                }
+            })
+        })
+        $('#quantityerror').on("click", function () {
+            bootbox.dialog({
+                title: 'Quantity Greater than the Current Stock',
+                message: '<p><h4>Proccess Can not be completed ,</h4></br>@warningmessage</p>',
+                size: 'lg',
+                onEscape: true,
+                backdrop: true,
+                buttons: {
+                    fee: {
+                        label: 'OK',
+                        className: 'btn-warning',
+                        callback: function () {
+                        }
+                    },
+                }
+            })
+        })
+    </script>
+
+}

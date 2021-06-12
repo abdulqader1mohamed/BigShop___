@@ -1,0 +1,198 @@
+@using BigShop___.Models
+@model BigShop___.Models.RegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Big Store-Register</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Unicat project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/bootstrap4/bootstrap.min.css">
+    <link href="~/Content/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/Content/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/responsive.css">
+    <link href="~/Content/styles/animate.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/styles/jquery.countdown.css" />
+    <link href="https://fonts.googleapis.com/css?family=Cairo:300,400,700,900" rel="stylesheet">
+</head>
+<body>
+
+    <div class="log-register">
+        <div class="container">
+            <div class="lr-content">
+                <div class="log-register-content">
+                    <div class="logo_container wow tada">
+                        <a href="~/Home/index">
+                            <span class="the">the </span>
+                            <div class="logo_text">Big Store<span></span></div>
+                            <p class="somtitle">The best supermarket</p>
+                        </a>
+                    </div>
+
+
+                    <div class="loginregister">
+                        <h2 class="title wow bounceInUp delay-100">Create an account</h2>
+                        <p class=" wow bounceInUp delay-200">Aleady have an account? <span><a href="~/Home/login"> Login Free!</a></span></p>
+                        <div class="loginwith">
+                            <ul>
+                                <li class="wow bounceInUp delay-300">
+                                    <a class="facebook" href="#"><i class="fa fa-facebook"></i><span class="hidden-xs">facebook</span></a>
+                                </li>
+                                <li class="wow bounceInUp delay-400">
+                                    <a class="twitter" href="#"><i class="fa fa-twitter"></i><span>twitter</span></a>
+                                </li>
+                                <li class="wow bounceInUp delay-500">
+                                    <a class="google" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i><span>google</span></a>
+                                </li>
+                            </ul>
+
+                            <p class="or wow fadeInUp delay-500">or</p>
+                        </div>
+                        <div class="tabcontent-grids">
+                            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                        <div class="form-group wow bounceInLeft delay-100">
+
+                                            <label>
+                                                First Name<span>*</span> <small>
+                                                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                                                </small>
+                                            </label>
+                                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "Enter Your first name*" })
+
+                                            <i class="fa fa-user"></i>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                        <div class="form-group wow bounceInLeft delay-100">
+
+                                            <label>
+                                                last Name<span>*</span> <small>
+                                                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                                                </small>
+                                            </label>
+                                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Enter Your last name*" })
+
+                                            <i class="fa fa-user"></i>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group wow bounceInLeft delay-100">
+
+                                    <label>
+                                        Email<span>*</span> <small>
+                                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                        </small>
+                                    </label>
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter Your Email*" })
+
+                                    <i class="fa fa-envelope"></i>
+
+                                </div>
+                                <div class="form-group wow bounceInLeft delay-200">
+
+                                    <label>
+                                        password<span>*</span> <small>
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                        </small>
+                                    </label>
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter Your password*" })
+
+                                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
+
+                                </div>
+                                <div class="form-group wow bounceInLeft delay-300">
+
+                                    <label>
+                                        confirm password<span>*</span> <small>
+                                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                                        </small>
+                                    </label>
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "confirm your password *" })
+
+                                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
+
+                                </div>
+                                <div class="form-group wow bounceInLeft delay-400">
+                                    <label>Account Type<span>*</span></label>
+
+                                    <select class="form-control" value="Customer" name="roletype" style="height:42px">
+                                        <option value="Customer">Customer</option>
+                                        <option value="Employee">Employee</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="form-group wow bounceInUp delay-500">
+                                    <a class="btn btn-default wow bounceInUp delay-600">
+                                        <input type="submit" value="Create Account" class="btn btn-default wow" style="background: #c23945;width:100%;border:none;outline:none;box-shadow:none;color:white;font-weight:600;font-size:20px;cursor:pointer" />
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Content/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Content/https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/main.js"></script>
+    <script src="~/Content/js/wow.min.js"></script>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+    <script>
+        new WOW().init();
+    </script>
+    <script src="~/Content/js/SmoothScroll.min.js"></script>
+
+    <!----- Start owl carosel --->
+    <!--        <script src="~/Content/js/jquery.min.js"></script>-->
+    <script src="~/Content/js/owl.carousel.min.js"></script>
+    <!----- Ebd owl carosel --->
+
+    <script src="~/Content/js/loading.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    <script src="~/Content/js/wow.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+</body>
+
+</html>
